@@ -35,7 +35,7 @@ export class LayerManager{
             ctx.textAlign = "start";
             ctx.fillText(val, 20, 75 + (i*19));
         }
-
+        
         let value = [": " + cab, ': PBT220354125879', ": " + date + " " + time, ": " + name, ": " + chassis, ': CONTRACT CARRIAGE/PASSENGER VEHICLES', ": " + phone, ": 0", ': 254874515', ": ", ': NOT APPLICABLE', ": "]
 
         for(let i = 0; i < value.length; i++){
@@ -47,7 +47,7 @@ export class LayerManager{
         }
     }
 
-    addRightDetails(ctx: any){
+    addRightDetails(ctx: any, barrier: string){
         let key = ['Tax Mode', 'Vehicle Class', 'Checkpost Name', 'Seating Cap(Ex. Driver)', 'Payment Mode', " ", " ", 'Permit Category'];
 
         for(let i = 0; i < key.length; i++){
@@ -58,7 +58,7 @@ export class LayerManager{
             ctx.fillText(val, 500, 151 + (i*19));
         }
 
-        let values = ['DAYS', 'MOTOR CAB', 'GHANHOULI', '4', 'ONLINE', " ", " ", ""];
+        let values = ['DAYS', 'MOTOR CAB', barrier, '4', 'ONLINE', " ", " ", ""];
 
         for(let i = 0; i < values.length; i++){
             const val = values[i];
@@ -93,8 +93,8 @@ export class LayerManager{
         
     }
 
-    addTable(ctx: any, x: number[], y: number){
-        let key = [['Particular', 'MV Tax()', 'Service/User Charge', 'Civic Infra Chess'],
+    addTable(ctx: any, x: number[], y: number, sDate: string, eDate: string){
+        let key = [['Particular', `MV Tax( ${sDate} TO ${eDate} )`, 'Service/User Charge', 'Civic Infra Chess'],
                     ['Fees/Tax', '200', '20', '20'],
                     ['Fine', '0', '0', '0'],
                     ['Total', '0', '0', '0']];
@@ -104,9 +104,9 @@ export class LayerManager{
 
     }
 
-    addDetails(ctx: any, x: number, y: number){
-
-        let arr = ['Grand Total : 240/- ( TWO HUNDRED FOURTY ONLY)',
+    addDetails(ctx: any, x: number, y: number, price: string){
+        ctx.font = 'normal 10px "Arial"';
+        let arr = [`Grand Total : ${price}/- ( TWO HUNDRED FOURTY ONLY)`,
         'Note : 1) This is a computer generated printout and no signature is required.',
         '2) Incorrect mentioning of vehicle class or seating capacity may lead to tax evasion and defaulter shall be liable for penal action.',
         'You will also receive the payment confirmation message'];
@@ -118,6 +118,7 @@ export class LayerManager{
     }
     
     private wrapText(context: any, text: any, x: number, y: number, maxWidth: number, lineHeight: number) {
+        context.font = '18px "Arial"';
         const words = text.split(' ');
         let line = '';
         for (let i = 0; i < words.length; i++) {
@@ -138,11 +139,11 @@ export class LayerManager{
     private addTableUtils(ctx: any, x: number, y: number, key: string[]){
         for(let i = 0; i < key.length; i++){
             if(i == 0){
-                ctx.font = 'bold 10px "Sura"';
+                ctx.font = 'bold 10px "Arial"';
                 ctx.textAlign = "start";
                 ctx.fillText(key[i], x, y + (i*19));
             }else{
-                ctx.font = 'normal 10px "Sura"';
+                ctx.font = 'normal 10px "Arial"';
                 ctx.textAlign = "start";
                 ctx.fillText(key[i], x, y + (i*19));
             }

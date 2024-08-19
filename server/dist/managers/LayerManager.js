@@ -49,7 +49,7 @@ class LayerManager {
             ctx.fillText(val, 156, 75 + (i * 19));
         }
     }
-    addRightDetails(ctx) {
+    addRightDetails(ctx, barrier) {
         let key = ['Tax Mode', 'Vehicle Class', 'Checkpost Name', 'Seating Cap(Ex. Driver)', 'Payment Mode', " ", " ", 'Permit Category'];
         for (let i = 0; i < key.length; i++) {
             const val = key[i];
@@ -57,7 +57,7 @@ class LayerManager {
             ctx.textAlign = "start";
             ctx.fillText(val, 500, 151 + (i * 19));
         }
-        let values = ['DAYS', 'MOTOR CAB', 'GHANHOULI', '4', 'ONLINE', " ", " ", ""];
+        let values = ['DAYS', 'MOTOR CAB', barrier, '4', 'ONLINE', " ", " ", ""];
         for (let i = 0; i < values.length; i++) {
             const val = values[i];
             ctx.font = 'normal 10px "Arial"';
@@ -91,8 +91,8 @@ class LayerManager {
             }
         });
     }
-    addTable(ctx, x, y) {
-        let key = [['Particular', 'MV Tax()', 'Service/User Charge', 'Civic Infra Chess'],
+    addTable(ctx, x, y, sDate, eDate) {
+        let key = [['Particular', `MV Tax( ${sDate} TO ${eDate} )`, 'Service/User Charge', 'Civic Infra Chess'],
             ['Fees/Tax', '200', '20', '20'],
             ['Fine', '0', '0', '0'],
             ['Total', '0', '0', '0']];
@@ -100,8 +100,9 @@ class LayerManager {
             this.addTableUtils(ctx, x[i], y, key[i]);
         }
     }
-    addDetails(ctx, x, y) {
-        let arr = ['Grand Total : 240/- ( TWO HUNDRED FOURTY ONLY)',
+    addDetails(ctx, x, y, price) {
+        ctx.font = 'normal 10px "Arial"';
+        let arr = [`Grand Total : ${price}/- ( TWO HUNDRED FOURTY ONLY)`,
             'Note : 1) This is a computer generated printout and no signature is required.',
             '2) Incorrect mentioning of vehicle class or seating capacity may lead to tax evasion and defaulter shall be liable for penal action.',
             'You will also receive the payment confirmation message'];
@@ -110,6 +111,7 @@ class LayerManager {
         }
     }
     wrapText(context, text, x, y, maxWidth, lineHeight) {
+        context.font = '18px "Arial"';
         const words = text.split(' ');
         let line = '';
         for (let i = 0; i < words.length; i++) {
@@ -130,12 +132,12 @@ class LayerManager {
     addTableUtils(ctx, x, y, key) {
         for (let i = 0; i < key.length; i++) {
             if (i == 0) {
-                ctx.font = 'bold 10px "Sura"';
+                ctx.font = 'bold 10px "Arial"';
                 ctx.textAlign = "start";
                 ctx.fillText(key[i], x, y + (i * 19));
             }
             else {
-                ctx.font = 'normal 10px "Sura"';
+                ctx.font = 'normal 10px "Arial"';
                 ctx.textAlign = "start";
                 ctx.fillText(key[i], x, y + (i * 19));
             }
